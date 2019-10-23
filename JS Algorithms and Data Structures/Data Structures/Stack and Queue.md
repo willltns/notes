@@ -64,7 +64,8 @@ myStack.push('yahoo')
 ```
 
 ### Implement Queue using Stacks --- O(1)
-```
+
+```javascript
 
 /**
  * Initialize data structure here.
