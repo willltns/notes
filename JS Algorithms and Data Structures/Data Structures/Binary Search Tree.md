@@ -114,111 +114,69 @@ class BinarySearchTree {
         return false
     }
 
+	breadthFirstTraverse_iterative() {
+        if (this.root === null) return
+        
+        const queue = [this.root], list = []
 
+        while(queue.length) {
+            const curNode = queue.shift()
+            list.push(curNode.value)
 
-
-
-
-    // First version of remove method implementation. something different, something may wrong.
-    firstVersionRemove(value) {
-        let curNode = this.root, parentNode = null
-
-        if (!this.root) return false
-
-        // Match root node
-        if (value === curNode.value) {
-
-            if (!curNode.left && !curNode.right) this.root = null
-
-            else if (curNode.left && !curNode.right) this.root = curNode.left
-
-            else if (!curNode.left && curNode.right) this.root = curNode.right
-
-            else if (curNode.left && curNode.right) {
-                let rightMin = curNode.right, rightMinParent = curNode
-                while (rightMin.left) {
-                    rightMinParent = rightMin
-                    rightMin = rightMin.left
-                }
-
-                this.root = rightMin
-
-                rightMinParent.left = rightMin.right
-
-                rightMin.left = curNode.left
-                rightMin.right = curNode.right
-            }
-            return true
+            if (curNode.left) queue.push(curNode.left)
+            if (curNode.right) queue.push(curNode.right)
         }
 
-        while (curNode) {
-            // To right.
-            if (value > curNode.value) {
-                if (!curNode.right) return false
-
-                parentNode = curNode
-                curNode = curNode.right
-                // Match and remove right node.
-                if (value === curNode.value) {
-                    if (!curNode.left && !curNode.right) parentNode.right = null
-
-                    else if (curNode.left && !curNode.right) parentNode.right = curNode.left
-
-                    else if (!curNode.left && curNode.right) parentNode.right = curNode.right
-
-                    else if (curNode.left && curNode.right) {
-                        let rightMin = curNode.right, rightMinParent = curNode
-                        while (rightMin.left) {
-                            rightMinParent = rightMin
-                            rightMin = rightMin.left
-                        }
-
-                        parentNode.right = rightMin
-
-                        if (rightMin !== curNode.right) {
-                            rightMinParent.left = rightMin.right
-                            rightMin.right = curNode.right
-                        }
-                        rightMin.left = curNode.left
-                    }
-                    return true
-                }
-            // To left.
-            } else if (value < curNode.value) {
-                if (!curNode.left) return false
-
-                parentNode = curNode
-                curNode = curNode.left
-                // Match and remove left node.
-                if (value === curNode.value) {
-                    if (!curNode.left && !curNode.right) parentNode.left = null
-
-                    else if (curNode.left && !curNode.right) parentNode.left = curNode.left
-
-                    else if (!curNode.left && curNode.right) parentNode.left = curNode.right
-
-                    else if (curNode.left && curNode.right) {
-                        let rightMin = curNode.right, rightMinParent = curNode
-                        while (rightMin.left) {
-                            rightMinParent = rightMin
-                            rightMin = rightMin.left
-                        }
-                        
-                        parentNode.left = rightMin
-
-                        if (rightMin !== curNode.right) {
-                            rightMinParent.left = rightMin.right
-                            rightMin.right = curNode.right
-                        }
-                        rightMin.left = curNode.left
-                    }
-                    return true
-                }
-            }
-        }
-        return false
+        return list
     }
 
+    breadthFirstTraverse_recursive(queue = [this.root], list = []) {
+        if (queue.length === 0) return list
+
+        const curNode = queue.shift()
+        list.push(curNode.value)
+
+        if (curNode.left) queue.push(curNode.left)
+        if (curNode.right) queue.push(curNode.right)
+
+        return this.breadthFirstTraverse_recursive(queue, list)
+    }
+
+    DFSInOrder() {
+        const data = []
+        function traverse(node) {
+            if (node.left) traverse(node.left)
+            data.push(node.value)
+            if (node.right) traverse(node.right)
+        }
+
+        traverse(this.root)
+        return data
+    }
+
+    DFSPreOrder() {
+        const data = []
+        function traverse(node) {
+            data.push(node.value)
+            if (node.left) traverse(node.left)
+            if (node.right) traverse(node.right)
+        }
+        
+        traverse(this.root)
+        return data
+    }
+
+    DFSPostOrder() {
+        const data = []
+        function traverse(node) {
+            if (node.left) traverse(node.left)
+            if (node.right) traverse(node.right)
+            data.push(node.value)
+        }
+        
+        traverse(this.root)
+        return data
+    }
 }
 
 var tree = new BinarySearchTree()
