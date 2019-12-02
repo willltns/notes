@@ -15,16 +15,16 @@ Hash Tables are collections used to store *key-value* pairs. and are fast for fi
 ```javascript
 // base hash function implementation.
 function hash(key, arrLength) {
-	let total = 0
-	// Prime number is helpful in distributing data uniformly.
-	let WEIRD_PRIME = 31
-	
-	for (let i = 0; i < Math.min(key.length, 30); i++) {
-		let char = key[i]
-		let value = char.charCodeAt(0) - 96
-		total = (total * WEIRD_PRIME + value) % arrLength
-	}
-	return total
+    let total = 0
+    // Prime number is helpful in distributing data uniformly.
+    let WEIRD_PRIME = 31
+    
+    for (let i = 0; i < Math.min(key.length, 30); i++) {
+    	let char = key[i]
+    	let value = char.charCodeAt(0) - 96
+    	total = (total * WEIRD_PRIME + value) % arrLength
+    }
+    return total
 }
 ```
 

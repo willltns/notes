@@ -109,7 +109,7 @@ class LinkList {
         return value
     }
 
-	reverse() {
+    reverse() {
         if (this.length === 1) return this
 
         let second = this.head.next
